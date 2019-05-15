@@ -1,0 +1,10 @@
+[Unit]
+Description=Background service
+
+[Service]
+ExecStart=/usr/local/bin/background
+User=kabeero
+Group=kabeero
+
+[Install]
+WantedBy=multi-user.target

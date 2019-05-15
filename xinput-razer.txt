@@ -1,0 +1,32 @@
+[~]
+kabeero@jasper $ xinput get-button-map 9
+1 2 3 4 5 6 7 8 9 
+[~]
+kabeero@jasper $ xinput list-props 9
+Device 'Razer Razer Mamba Tournament Edition':
+	Device Enabled (145):	1
+	Coordinate Transformation Matrix (147):	1.000000, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000, 0.000000, 1.000000
+	libinput Natural Scrolling Enabled (282):	0
+	libinput Natural Scrolling Enabled Default (283):	0
+	libinput Scroll Methods Available (284):	0, 0, 1
+	libinput Scroll Method Enabled (285):	0, 0, 0
+	libinput Scroll Method Enabled Default (286):	0, 0, 0
+	libinput Button Scrolling Button (287):	2
+	libinput Button Scrolling Button Default (288):	2
+	libinput Middle Emulation Enabled (289):	0
+	libinput Middle Emulation Enabled Default (290):	0
+	libinput Accel Speed (291):	0.000000
+	libinput Accel Speed Default (292):	0.000000
+	libinput Accel Profiles Available (293):	1, 1
+	libinput Accel Profile Enabled (294):	1, 0
+	libinput Accel Profile Enabled Default (295):	1, 0
+	libinput Left Handed Enabled (296):	0
+	libinput Left Handed Enabled Default (297):	0
+	libinput Send Events Modes Available (267):	1, 0
+	libinput Send Events Mode Enabled (268):	0, 0
+	libinput Send Events Mode Enabled Default (269):	0, 0
+	Device Node (270):	"/dev/input/event3"
+	Device Product ID (271):	5426, 70
+	libinput Drag Lock Buttons (298):	<no items>
+	libinput Horizontal Scroll Enabled (299):	1
+
