@@ -54,7 +54,7 @@ if [[ -n $1 ]]; then
 		USER=$STRYKER_USER
 		PASS=$STRYKER_PASS
 		WIDTH=3840
-		HEIGHT=2100
+		HEIGHT=2070
 
 	if [[ -n $2 ]]; then
 		WIDTH=$2
