@@ -22,34 +22,34 @@ STRYKER_PASS=""
 
 if [[ -n $1 ]]; then
 
-	if [ $1 == "m3" ]; then
+	if [ $1 == "1" ]; then
 		
 		echo "$1: vncviewer $M3_CONN"
 		vncviewer $M3_CONN
 		exit
 
-	elif [ $1 == "poseidon" ]; then
+	elif [ $1 == "2" ]; then
 
 		echo "$1: vncviewer $POSEIDON_CONN"
 		vncviewer $POSEIDON_CONN
 		exit
 
-	elif [ $1 == "wellness" ]; then
+	elif [ $1 == "3" ]; then
 		CONN=$WELLNESS_CONN
 		USER=$WELLNESS_USER
 		PASS=$WELLNESS_PASS
 	
-	elif [ $1 == "bethany" ]; then
+	elif [ $1 == "4" ]; then
 		CONN=$BETHANY_CONN
 		USER=$BETHANY_USER
 		PASS=$BETHANY_PASS
 	
-	elif [ $1 == "tenderspec" ]; then
+	elif [ $1 == "5" ]; then
 		CONN=$TENDER_CONN
 		USER=$TENDER_USER
 		PASS=$TENDER_PASS
 	
-	elif [ $1 == "stryker" ]; then
+	elif [ $1 == "6" ]; then
 		CONN=$STRYKER_CONN
 		USER=$STRYKER_USER
 		PASS=$STRYKER_PASS
@@ -68,9 +68,9 @@ if [[ -n $1 ]]; then
 		exit
 	fi;
 	
-	echo "$1: xfreerdp /v:$CONN /u:$USER /p:$PASS /w:$WIDTH /h:$HEIGHT"
-	xfreerdp /v:$CONN /u:$USER /p:$PASS /w:$WIDTH /h:$HEIGHT
+	echo "$1: xfreerdp /v:$CONN /u:$USER /p:******** /w:$WIDTH /h:$HEIGHT"
+	xfreerdp /sound:sys:pulse /multimedia:sys:pulse /gdi:hw /t:'rdp '$1 /v:$CONN /u:$USER /p:$PASS /w:$WIDTH /h:$HEIGHT
 else
-	echo "usage: rdp [m3|poseidon|bethany|wellness|tenderspec|stryker]"
+	echo "usage: rdp [1|2|3|4|5|6]"
 fi;
 
