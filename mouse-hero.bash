@@ -23,9 +23,9 @@ case $1 in
 	s|side)
 		
 		if [ $# -eq 2 ]; then
-			if [[ $2 == "on" ]] | [[ $2 == "1" ]]; then
+			if   [[ $2 == "on"  ]] || [[ $2 == "1" ]]; then
 				side-on
-			elif [[ $2 == "off" ]] | [[ $2 == "0" ]]; then
+			elif [[ $2 == "off" ]] || [[ $2 == "0" ]]; then
 				side-off
 			else
 				side-flip
@@ -38,9 +38,9 @@ case $1 in
 	n|natural)
 
 		if [ $# -eq 2 ]; then
-			if [[ $2 == "on" ]] | [[ $2 == "1" ]]; then
+			if   [[ $2 == "on"  ]] || [[ $2 == "1" ]]; then
 				natural-on
-			elif [[ $2 == "off" ]] | [[ $2 == "0" ]]; then
+			elif [[ $2 == "off" ]] || [[ $2 == "0" ]]; then
 				natural-off
 			else
 				natural-flip
