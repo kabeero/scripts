@@ -7,5 +7,4 @@ for d in $dirs; do
 	sudo umount $d
 done;
 
-sudo mount -t cifs //domaincorp.com/folder/ /media/domain/home -o
-credentials=/root/.smbcredentials,iocharset=utf8,uid=kabeero,gid=kabeero,file_mode=0755,dir_mode=0755 && echo -n '.'
+sudo mount -t cifs //domaincorp.com/folder/ /media/domain/home -o vers=1.0,credentials=/root/.smbcredentials,iocharset=utf8,uid=kabeero,gid=kabeero,file_mode=0755,dir_mode=0755 && echo -n '.'
