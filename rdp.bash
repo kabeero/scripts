@@ -1,59 +1,65 @@
 WIDTH=2560
 HEIGHT=1440
 
-M3_CONN="127.0.0.1:7777"
-POSEIDON_CONN="127.0.0.1:8888"
+SERVER1=""
+SERVER1_CONN=""
+SERVER1_USER=""
+SERVER1_PASS=""
 
-BETHANY_CONN=""
-BETHANY_USER=""
-BETHANY_PASS=""
+SERVER2=""
+SERVER2_CONN=""
+SERVER2_USER=""
+SERVER2_PASS=""
 
-WELLNESS_CONN=""
-WELLNESS_USER=""
-WELLNESS_PASS=""
+SERVER3=""
+SERVER3_CONN=""
+SERVER3_USER=""
+SERVER3_PASS=""
 
-TENDER_CONN=""
-TENDER_USER=""
-TENDER_PASS=""
+SERVER4=""
+SERVER4_CONN=""
+SERVER4_USER=""
+SERVER4_PASS=""
 
-STRYKER_CONN=""
-STRYKER_USER=""
-STRYKER_PASS=""
+SERVER5=""
+SERVER5_CONN=""
+SERVER5_USER=""
+SERVER5_PASS=""
 
 if [[ -n $1 ]]; then
 
-	if [ $1 == "1" ]; then
+	if [ $1 == $SERVER1 ]; then
 		
-		echo "$1: vncviewer $M3_CONN"
-		vncviewer $M3_CONN
+		echo "$1: vncviewer $SERVER1_CONN"
+		vncviewer $SERVER1_CONN
 		exit
 
-	elif [ $1 == "2" ]; then
+	elif [ $1 == $SERVER2 ]; then
 
-		echo "$1: vncviewer $POSEIDON_CONN"
-		vncviewer $POSEIDON_CONN
+		echo "$1: vncviewer $SERVER2_CONN"
+		vncviewer $SERVER2_CONN
 		exit
 
-	elif [ $1 == "3" ]; then
-		CONN=$WELLNESS_CONN
-		USER=$WELLNESS_USER
-		PASS=$WELLNESS_PASS
+	elif [ $1 == $SERVER3 ]; then
+		CONN=$SERVER3_CONN
+		USER=$SERVER3_USER
+		PASS=$SERVER3_PASS
 	
-	elif [ $1 == "4" ]; then
-		CONN=$BETHANY_CONN
-		USER=$BETHANY_USER
-		PASS=$BETHANY_PASS
+	elif [ $1 == $SERVER4 ]; then
+		CONN=$SERVER4_CONN
+		USER=$SERVER4_USER
+		PASS=$SERVER4_PASS
 	
-	elif [ $1 == "5" ]; then
-		CONN=$TENDER_CONN
-		USER=$TENDER_USER
-		PASS=$TENDER_PASS
+	elif [ $1 == $SERVER5 ]; then
+		CONN=$SERVER5_CONN
+		USER=$SERVER5_USER
+		PASS=$SERVER5_PASS
 	
-	elif [ $1 == "6" ]; then
-		CONN=$STRYKER_CONN
-		USER=$STRYKER_USER
-		PASS=$STRYKER_PASS
-		WIDTH=3840
+	elif [ $1 == $SERVER6 ]; then
+		CONN=$SERVER6_CONN
+		USER=$SERVER6_USER
+		PASS=$SERVER6_PASS
+		WIDTH=3800
 		HEIGHT=2070
 
 	if [[ -n $2 ]]; then
@@ -69,8 +75,8 @@ if [[ -n $1 ]]; then
 	fi;
 	
 	echo "$1: xfreerdp /v:$CONN /u:$USER /p:******** /w:$WIDTH /h:$HEIGHT"
-	xfreerdp /sound:sys:pulse /multimedia:sys:pulse /gdi:hw /t:'rdp '$1 /v:$CONN /u:$USER /p:$PASS /w:$WIDTH /h:$HEIGHT
+	xfreerdp +fonts /sound:sys:pulse /multimedia:sys:pulse /gdi:hw /t:'rdp '$1 /v:$CONN /u:$USER /p:$PASS /w:$WIDTH /h:$HEIGHT
 else
-	echo "usage: rdp [1|2|3|4|5|6]"
+	echo "usage: rdp [$SERVER1|$SERVER2|$SERVER3|$SERVER4|$SERVER5|$SERVER6]"
 fi;
 
