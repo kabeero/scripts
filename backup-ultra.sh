@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-STRYKER_DIR=${HOME}/work
+WORK_DIR=${HOME}/work
 ULTRA_DIR=${HOME}/ultra
 
 if [[ $(mount | grep -i ultra | wc -l) -eq 0 ]]; then
@@ -8,10 +8,10 @@ if [[ $(mount | grep -i ultra | wc -l) -eq 0 ]]; then
 
 else
 	# date && rsync -aq . ~/ultra/ && date && systemctl suspend
-	echo "Backing up $STRYKER_DIR to $ULTRA_DIR"
+	echo "Backing up $WORK_DIR to $ULTRA_DIR"
 	
 	date
-	rsync -haqi --progress $STRYKER_DIR/* $ULTRA_DIR
+	rsync -haqi --progress $WORK_DIR/* $ULTRA_DIR
 	date
 
 fi
