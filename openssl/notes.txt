@@ -1,0 +1,11 @@
+stunnel by default does not check / require openssl keys
+
+if you set verify to 2 or 3:
+2: compare against a given CAfile (certificate authority)
+3: compare against a given CAfile (locally installed certificate)
+
+steps:
+1) create CA file (regular key) on server: server_ca_{cert,key}.pem
+2) create openssl key on server: server_{cert,key}.pem (stunnel: key=,cert=)
+3) create openssl keys on client, create a certificate request: client.req
+4) using server's CA certificate, process request and return: client_cert.pem
