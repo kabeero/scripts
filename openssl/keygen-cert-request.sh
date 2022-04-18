@@ -3,7 +3,7 @@ if [[ $# -gt 0 ]]; then
     openssl req -new \
                 -key $1_key.pem \
                 -out $1_cert.req \
-                -subj "/C=US/ST=Michigan/L=Kalamazoo/O=Stryker/OU=Instruments/CN=${1}.stryker.com"
+                -subj "/C=US/ST=State/L=Location/O=Organization/OU=Division/CN=${1}.domain.com"
 else
     echo "Please provide a machine name to create a certificate request for"
 fi;
