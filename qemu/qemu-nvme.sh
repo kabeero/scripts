@@ -142,9 +142,9 @@ then
 
     args=(
         -enable-kvm
-        -m          64G
+        -m          32G
         -cpu        host,kvm=off,+invtsc,vmware-cpuid-freq=on
-        -smp        $(nproc)
+        -smp        8
         -machine    type=q35,accel=kvm
         -boot       order=dc,menu=on
         -global     ICH9-LPC.disable_s3=1
@@ -152,7 +152,7 @@ then
         -drive      file=${UEFI},if=pflash,format=raw
         -drive      file=${NVRAM},if=pflash,format=raw
         -device     isa-applesmc,osk="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
-        -netdev     user,id=vmnic
+        -netdev     tap,ifname=tap0,script=net/ifup.sh,downscript=no,id=vmnic
         -device     e1000,netdev=vmnic,mac=${MAC}
         -usbdevice  tablet
         -daemonize
@@ -162,12 +162,14 @@ then
         -vga        none
         -spice      port=5930,disable-ticketing=on
     )
+        #-smp        $(nproc)
         #-device     ivshmem-plain,memdev=ivshmem,bus=pcie.0
         #-object     memory-backend-file,id=ivshmem,share=on,mem-path=/dev/shm/looking-glass,size=128M
         #-vga        none
         #-spice      port=5930,disable-ticketing=on
         #-drive      file=${ISO1},media=cdrom
         #-drive      file=${DRIVE1},format=raw
+        #-netdev     user,id=vmnic
 
         #  -device     qemu-xhci,id=xhci
         #  -device     usb-ehci,id=ehci
