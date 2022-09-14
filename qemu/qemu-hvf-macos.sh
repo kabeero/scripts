@@ -30,7 +30,7 @@ args=(
 
 qemu-system-x86_64 ${args[@]}
 
-if [[ $? -eq 0 ]];
+if [[ $? -eq 0 ]]
 then
     vncviewer localhost:5910
 fi
