@@ -1,1 +1,0 @@
-xcalib -i -a -v
