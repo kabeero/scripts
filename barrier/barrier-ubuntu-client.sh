@@ -24,7 +24,7 @@ fi
 echo "⏳ Waiting for Server to come up before starting client"
 sleep 6
 
-echo "🗘 Starting ${BARRIER_CLIENT}..."
+echo "🧶 Starting ${BARRIER_CLIENT}..."
 $BARRIER_CLIENT -d DEBUG -n $BARRIER_UID -f 127.0.0.1 > $BARRIER_LOG 2>&1 & ## 2.3
 
 if [ $? -ne 0 ]; then
