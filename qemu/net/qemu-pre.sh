@@ -2,15 +2,20 @@
 
 set -x
 
-sudo ip link add br0 type bridge
+BR="br0"
+TAP="tap0"
 
-sudo ip link set br0 up
+sudo ip link add $BR type bridge
 
-sudo ip link set enp68s0 master br0
+sudo ip link set $BR up
 
-sudo dhcpcd br0
+IF=$(ip link show up | grep -Eo "(en.*):" | tr -d ":")
 
-sudo ip tuntap add dev tap0 mode tap group libvirt
+sudo ip link set $IF master $BR
+
+sudo dhcpcd $BR
+
+sudo ip tuntap add dev $TAP mode tap group libvirt
 
 # echo 16384 | sudo tee /proc/sys/vm/nr_hugepages
 

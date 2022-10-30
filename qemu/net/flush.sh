@@ -11,7 +11,7 @@ declare -rA COLORS=(
   [OFF]=$'\033[0m'
 )
 
-IF=$(ip a | grep -Eo "(en.*):" | tr -d ":")
+IF=$(ip link show up | grep -Eo "(en.*):" | tr -d ":")
 
 printf "\n\n"
 printf ${COLORS[CYAN]}
