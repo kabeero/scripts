@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+
+# set -xe
+
 declare -rA COLORS=(
   [RED]=$'\033[0;31m'
   [GREEN]=$'\033[0;32m'
@@ -11,17 +14,37 @@ declare -rA COLORS=(
   [OFF]=$'\033[0m'
 )
 
+WLO=$(ip route | grep -Eo "wlo[0-9]+" -m 1)
+ENO=$(ip add | grep -Eo "(enp.*):" -m 1 | tr -d ":")
+BRIDGED=$(ip add | grep ${ENO} | grep -o "master")
+
+LAN_NET=$(ip route | grep -Eo "^[0-9]+.[0-9.]+{3}/[0-9]+" -m 1)
+BR_IF=$(ip add | grep -Eo "br[0-9]+" -m 1)
+BR_IP=$(ip add show dev $BR_IF | grep -Eo "inet [0-9]+.[0-9]+.[0-9]+.[0-9]+" -m 1 | awk '{print $2}')
+ROUTER=$(ip route | grep -m 1 -E "dev ${BR_IF}" | awk '{print $3}')
+
+if [[ ! -z $WLO ]]; then
+    printf "\n\n"
+    printf ${COLORS[PURPLE]}
+    printf "Detected ${WLO} link, disabling...\n"
+    printf ${COLORS[OFF]}
+    sudo ip link set ${WLO} down
+fi
+
+if [[ -z $BRIDGED ]]; then
+    printf "\n\n"
+    printf ${COLORS[PURPLE]}
+    printf "Detected ${ENO} not bridged, enabling...\n"
+    printf ${COLORS[OFF]}
+    sudo ip link set ${ENO} master $BR_IF
+fi
+
 IF=$(ip link show up | grep -Eo "(en.*):" | tr -d ":")
 
 printf "\n\n"
 printf ${COLORS[CYAN]}
 ip route
 printf ${COLORS[OFF]}
-
-LAN_NET=$(ip route | grep -Eo "^[0-9]+.[0-9.]+{3}/[0-9]+" -m 1)
-BR_IF=$(ip route | grep -E "dev br[0-9]+" -m 1 | grep -Eo "br[0-9]+")
-BR_IP=$(ip route | grep -E ${BR_IF} | grep -E ${LAN_NET} -m 1 | awk '{print $9}')
-ROUTER=$(ip route | grep -m 1 -E "dev ${BR_IF}" | awk '{print $3}')
 
 printf "\n\n"
 
