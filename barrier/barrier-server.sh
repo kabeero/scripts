@@ -11,7 +11,7 @@ ubuntu () {
 }
 
 windows () {
-    echo " Loading Windows config"
+    echo "  Loading Windows config"
     cfgFile=$cfgFileWindows
 }
 
@@ -24,7 +24,7 @@ if [[ $# -eq 0 ]]; then
     unknown
 elif [[ $# -eq 1 ]]; then
     case $1 in
-        [uU]*)
+        [uUlL]*)
             ubuntu
             ;;
         [wW]*)
