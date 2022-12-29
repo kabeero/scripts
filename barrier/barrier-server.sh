@@ -16,7 +16,7 @@ windows () {
 }
 
 unknown () {
-    echo "Please enter 💻 Ubuntu or   Windows config"
+    echo "Please enter 💻 Ubuntu or   Windows config"
     exit 1
 }
 
