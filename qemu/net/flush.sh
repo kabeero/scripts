@@ -19,9 +19,15 @@ ENO=$(ip add | grep -Eo "(enp.*):" -m 1 | tr -d ":")
 BRIDGED=$(ip add | grep ${ENO} | grep -o "master")
 
 LAN_NET=$(ip route | grep -Eo "^[0-9]+.[0-9.]+{3}/[0-9]+" -m 1)
-BR_IF=$(ip add | grep -Eo "br[0-9]+" -m 1)
+BR_IF=$(ip add | grep -Eo "[^vir](br[0-9]+)" -m 1 | tr -d ' ')
 BR_IP=$(ip add show dev $BR_IF | grep -Eo "inet [0-9]+.[0-9]+.[0-9]+.[0-9]+" -m 1 | awk '{print $2}')
 ROUTER=$(ip route | grep -m 1 -E "dev ${BR_IF}" | awk '{print $3}')
+
+if [[ ! -z $BR_IP ]]; then
+    printf "Bridge interface not linked, reconnecting...\n"
+    sudo dhcpcd $BR_IF && \
+        BR_IP=$(ip add show dev $BR_IF | grep -Eo "inet [0-9]+.[0-9]+.[0-9]+.[0-9]+" -m 1 | awk '{print $2}')
+fi
 
 if [[ ! -z $WLO ]]; then
     printf "\n\n"
@@ -54,7 +60,7 @@ if [[ ! -z $BR_IF ]] && [[ ! -z $BR_IP ]]; then
     printf ${COLORS[OFF]}
 else
     printf ${COLORS[RED]}
-    printf "Couldn't find a bridge interface...\n"
+    printf "Couldn't find a bridge interface with an IP...\n"
     printf ${COLORS[OFF]}
     exit 1
 fi
