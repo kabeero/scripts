@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
-# logitech hero scroll settings
+# set -xe
 
-ID=`xinput list | grep -E "Razer Razer Mamba Tournament Edition [^CSK] .*pointer.*" | awk '{print $8}' | sed -e 's/id=//g'`
-NATURAL_ID=`xinput list-props $ID | grep "Natural Scrolling Enabled (" | sed -E 's/(.*)\(([0-9]{3})(.*)([0-9]{1})/\2/'`
-NATURAL_ON=`xinput list-props $ID | grep "Natural Scrolling Enabled (" | sed -E 's/(.*)\(([0-9]{3})(.*)([0-9]{1})/\4/'`
+# MOUSE_STR="Razer Razer Mamba Tournament Edition"
+MOUSE_STR="Razer Razer Basilisk Ultimate Dongle"
+MOUSE_STR="${MOUSE_STR} [^CSK] .*pointer.*"
+MOUSE_PROP="Natural Scrolling Enabled ("
+
+ID=`xinput list | grep -E "$MOUSE_STR" | awk '{print $8}' | sed -e 's/id=//g'`
+NATURAL_ID=`xinput list-props $ID | grep "$MOUSE_PROP" | sed -E 's/(.*)\(([0-9]{3})(.*)([0-9]{1})/\2/'`
+NATURAL_ON=`xinput list-props $ID | grep "$MOUSE_PROP" | sed -E 's/(.*)\(([0-9]{3})(.*)([0-9]{1})/\4/'`
 BUTTON_MAP=`xinput get-button-map $ID | awk '{print $6 $7}'`
 
 # print button map, shows side scroll left/right, etc
