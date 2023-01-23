@@ -39,7 +39,7 @@ case $1 in
         echo
         echo "🔃 Uploading changes to S3…"
         echo
-        aws s3 sync ${VAULT} ${S3_URI} --delete --exclude=.DS_Store --exclude "Music/*"
+        aws s3 sync ${VAULT} ${S3_URI} --delete --exclude=.DS_Store --exclude "Music/*" --dryrun
         echo
         read "REPLY?📚 Apply these changes? "
         if [[ $REPLY =~ "^[Yy]" ]]; then
