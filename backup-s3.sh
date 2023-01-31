@@ -29,7 +29,7 @@ case $1 in
         echo
         echo "🔍 Comparing changes from S3…"
         echo
-        aws s3 sync ${S3_URI} ${VAULT} --delete --exclude=".DS_Store" --exclude "Music/*" --dryrun
+        aws s3 sync ${S3_URI} ${VAULT} --delete --exclude="**/.DS_Store" --exclude "Music/*" --dryrun
         echo
         echo
         read "REPLY?📚 Apply these changes? "
@@ -37,7 +37,7 @@ case $1 in
             echo
             echo "🔃 Downloading changes from S3…"
             echo
-            aws s3 sync ${S3_URI} ${VAULT} --delete --exclude=".DS_Store" --exclude "Music/*"
+            aws s3 sync ${S3_URI} ${VAULT} --delete --exclude="**/.DS_Store" --exclude "Music/*"
         fi
         echo
         ;;
@@ -46,14 +46,14 @@ case $1 in
         echo
         echo "🔎 Comparing changes to S3…"
         echo
-        aws s3 sync ${VAULT} ${S3_URI} --delete --exclude=.DS_Store --exclude "Music/*" --dryrun
+        aws s3 sync ${VAULT} ${S3_URI} --delete --exclude="**/.DS_Store" --exclude "Music/*" --dryrun
         echo
         read "REPLY?📚 Apply these changes? "
         if [[ $REPLY =~ "^[Yy]" ]]; then
             echo
             echo "🔃 Uploading changes to S3…"
             echo
-            aws s3 sync ${VAULT} ${S3_URI} --delete --exclude=.DS_Store --exclude "Music/*"
+            aws s3 sync ${VAULT} ${S3_URI} --delete --exclude="**/.DS_Store" --exclude "Music/*"
         fi
         echo
         ;;
