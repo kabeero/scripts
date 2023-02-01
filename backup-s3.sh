@@ -32,12 +32,19 @@ case $1 in
         aws s3 sync ${S3_URI} ${VAULT} --delete --exclude="**/.DS_Store" --exclude "Music/*" --dryrun
         echo
         echo
-        read "REPLY?📚 Apply these changes? "
-        if [[ $REPLY =~ "^[Yy]" ]]; then
-            echo
-            echo "🔃 Downloading changes from S3…"
-            echo
-            aws s3 sync ${S3_URI} ${VAULT} --delete --exclude="**/.DS_Store" --exclude "Music/*"
+        read "REPLY?📚 Apply these changes (Y/N/P)? "
+        if [[ $REPLY =~ "^[Yy]" || $REPLY =~ "^[Pp]" ]]; then
+            if [[ $REPLY =~ "^[Pp]" ]]; then
+                echo
+                echo "📙 Downloading partial changes from S3…"
+                echo
+                aws s3 sync ${S3_URI} ${VAULT} --exclude="**/.DS_Store" --exclude "Music/*"
+            else
+                echo
+                echo "📘 Downloading full changes from S3…"
+                echo
+                aws s3 sync ${S3_URI} ${VAULT} --delete --exclude="**/.DS_Store" --exclude "Music/*"
+            fi
         fi
         echo
         ;;
@@ -48,12 +55,19 @@ case $1 in
         echo
         aws s3 sync ${VAULT} ${S3_URI} --delete --exclude="**/.DS_Store" --exclude "Music/*" --dryrun
         echo
-        read "REPLY?📚 Apply these changes? "
-        if [[ $REPLY =~ "^[Yy]" ]]; then
-            echo
-            echo "🔃 Uploading changes to S3…"
-            echo
-            aws s3 sync ${VAULT} ${S3_URI} --delete --exclude="**/.DS_Store" --exclude "Music/*"
+        read "REPLY?📚 Apply these changes (Y/N/P)? "
+        if [[ $REPLY =~ "^[Yy]" || $REPLY =~ "^[Pp]" ]]; then
+            if [[ $REPLY =~ "^[Pp]" ]]; then
+                echo
+                echo "📙 Uploading partial changes to S3…"
+                echo
+                aws s3 sync ${VAULT} ${S3_URI} --exclude="**/.DS_Store" --exclude "Music/*"
+            else
+                echo
+                echo "📗 Uploading full changes to S3…"
+                echo
+                aws s3 sync ${VAULT} ${S3_URI} --delete --exclude="**/.DS_Store" --exclude "Music/*"
+            fi
         fi
         echo
         ;;
