@@ -1,1 +1,1 @@
-curl -s "wttr.in/?format=j1" | jq '.current_condition[] | {uvIndex} | join(" ")' | tr -d '"'
+curl -s "wttr.in/?format=j1" | jq -r '.current_condition[] | ("UV Index: " + .uvIndex)'
