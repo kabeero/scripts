@@ -2,8 +2,12 @@
 
 # set -xe
 
+MOUSE=$(gum choose Basilisk Deathadder)
 # MOUSE_STR="Razer Razer Mamba Tournament Edition"
 MOUSE_STR="Razer Razer Basilisk Ultimate Dongle"
+if [[ $MOUSE == "Deathadder" ]]; then
+	MOUSE_STR="Razer Razer DeathAdder V2 Pro"
+fi
 MOUSE_STR="${MOUSE_STR} [^CSK] .*pointer.*"
 MOUSE_PROP="Natural Scrolling Enabled ("
 
