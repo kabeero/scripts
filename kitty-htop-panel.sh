@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 lines=10
 if [[ $# -eq 1 ]]; then
     lines=$1
