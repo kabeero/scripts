@@ -1,2 +1,6 @@
 #!/usr/bin/env sh
-kitty +kitten panel --lines 10 sh -c 'htop'
+lines=10
+if [[ $# -eq 1 ]]; then
+    lines=$1
+fi
+kitty +kitten panel --lines $lines sh -c 'htop'
