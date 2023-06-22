@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # the hubs switch #s depending on the port
 # modeset driver has dashes
