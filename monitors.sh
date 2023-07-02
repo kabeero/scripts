@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# DP-0: right (left)
+# DP-2: middle (right)
+# DP-4: left (left)
 
 if ! command -v gum &> /dev/null ; then
     echo
@@ -24,10 +27,10 @@ if [[ $select == "1" ]]; then
     xrandr --output DP-4 --off
 elif [[ $select == "2" ]]; then
     xrandr --output DP-0 --rotate left --auto
-    xrandr --output DP-2 --rotate left --auto --left-of DP-0
+    xrandr --output DP-2 --rotate right --auto --left-of DP-0
     xrandr --output DP-4 --off
 elif [[ $select == "3" ]]; then
     xrandr --output DP-0 --rotate left --auto
-    xrandr --output DP-2 --rotate left --auto --left-of DP-0
-    xrandr --output DP-4 --rotate right --auto --left-of DP-2
+    xrandr --output DP-2 --rotate right --auto --left-of DP-0
+    xrandr --output DP-4 --rotate left --auto --left-of DP-2
 fi
