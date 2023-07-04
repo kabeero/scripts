@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # DP-0: right (left)
 # DP-2: middle (right)
@@ -6,7 +6,7 @@
 
 if ! command -v gum &> /dev/null ; then
     echo
-    echo "Please install gum"
+    echo >&2 "Please install gum"
     echo
     exit 1
 fi
