@@ -6,8 +6,17 @@ BARRIER_UID="linux"
 BARRIER_CLIENT="barrierc"
 BARRIER_PORT=24800
 
-# Kill any previous barriers ssh tunnels, and local barrierc processes
-killall -q barrierc || echo "⛔ No Barrier clients running"
+pid_brc=$(pgrep -f "barrierc")
+if [ -n $pid_brc ]; then
+    echo "🔴 Terminating existing barrier client"
+    kill -9 $pid_brc
+fi
+
+pid_ssh=$(pgrep -f "ssh -nNfL")
+if [ -n $pid_ssh ]; then
+    echo "🔴 Terminating existing ssh tunnel"
+    kill -9 $pid_ssh
+fi
 
 # Start desktop barrier server via ssh tunnel, forward the port locally
 printf "🔗 Connecting to $BARRIER_HOST...\n"
