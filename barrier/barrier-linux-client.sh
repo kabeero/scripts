@@ -7,7 +7,7 @@ BARRIER_CLIENT="barrierc"
 BARRIER_PORT=24800
 
 pid_brc=$(pgrep -f "barrierc")
-if [[ -z $pid_brc ]]; then
+if [[ -n $pid_brc ]]; then
     echo "🔴 Terminating existing barrier client"
     for p in $pid_brc; do
 	kill -9 $p
@@ -15,7 +15,7 @@ if [[ -z $pid_brc ]]; then
 fi
 
 pid_ssh=$(pgrep -f "ssh -nNfL")
-if [[ -z $pid_ssh ]]; then
+if [[ -n $pid_ssh ]]; then
     echo "🔴 Terminating existing ssh tunnel"
     for p in $pid_ssh; do
 	kill -9 $p
