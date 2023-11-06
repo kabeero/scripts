@@ -12,14 +12,18 @@ for c in ${cmds[@]}; do
     fi
 done
 
-mode=$(gum choose "Light" "Dark")
+if [[ $# -eq 0 ]]; then
+    mode=$(gum choose "Light" "Dark")
+else
+    mode=$1
+fi
 
 case $mode in
-    Li*)
+    Li*|l*)
             echo "Using light mode"
             kitty +kitten themes "GitHub Light"
             ;;
-    Da*)
+    Da*|d*)
             echo "Using dark mode"
             kitty +kitten themes "noirblaze"
             ;;
