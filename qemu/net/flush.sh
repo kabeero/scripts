@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# set -xe
+set -uo pipefail
 
 declare -rA COLORS=(
   [RED]=$'\033[0;31m'

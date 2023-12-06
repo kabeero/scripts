@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-if [[ $# -eq 1 ]] ; then
-    cat ${1} | xargs -n2 -P4 yt-dlp -o
+if [[ $# -eq 0 ]] ; then
+    DL="dl.txt"
+else
+    DL=$1
 fi
+
+cat $DL | xargs -n2 -P4 yt-dlp -o
