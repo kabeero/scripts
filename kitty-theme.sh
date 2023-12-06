@@ -18,6 +18,8 @@ else
 	mode=$1
 fi
 
+mkdir -p "${HOME}/.config/bat"
+
 case $mode in
 Li* | l*)
 	echo "Using light mode"
