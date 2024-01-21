@@ -27,9 +27,15 @@ echo $select
 # INPUT3="DP-4"
 
 # amdgpu
-INPUT1="DisplayPort-0"
-INPUT2="DisplayPort-1"
-INPUT3="DisplayPort-2"
+# INPUT1="DisplayPort-0"
+# INPUT2="DisplayPort-1"
+# INPUT3="DisplayPort-2"
+
+# generic
+set -exo pipefail
+INPUT1=$(xrandr | grep " connected" | awk '{if (NR==1) print $1}')
+INPUT2=$(xrandr | grep " connected" | awk '{if (NR==2) print $1}')
+INPUT3=$(xrandr | grep " connected" | awk '{if (NR==3) print $1}')
 
 if [[ $select == "1" ]]; then
 	xrandr --output "$INPUT1" --rotate left --auto
