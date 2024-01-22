@@ -14,6 +14,14 @@ fi
 if [[ $# -eq 1 ]]; then
 	select=$(echo $1 | grep -oE "^[0-9]")
 else
+	echo
+	echo "🖵  Detected displays"
+	echo
+	displays=$(xrandr | grep " connected" | awk {'print $1'})
+	for d in ${displays[@]}; do
+		echo "  $d"
+	done
+	echo
 	monitors=("1) Single monitor" "2) Dual monitor" "3) Triple monitor")
 	IFS="\\"
 	select=$(gum choose ${monitors[@]} | grep -oE "^[0-9]")
