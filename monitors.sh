@@ -35,11 +35,22 @@ else
 	fi
 fi
 
+if [[ $MONS != 1 && $MONS != 2 && $MONS != 3 ]]; then
+	echo "🟥 Unsupported number of monitors"
+	exit 1
+fi
+
 echo "$select"
 
 set -exo pipefail
 
-if [[ $MONS == 2 ]]; then
+if [[ $MONS == 1 ]]; then
+
+	INPUT1=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==1) print $1}')
+
+	xrandr --output "$INPUT1" --auto
+
+elif [[ $MONS == 2 ]]; then
 
 	INPUT1=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==1) print $1}')
 	INPUT2=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==2) print $1}')
@@ -77,8 +88,6 @@ elif [[ $MONS == 3 ]]; then
 		xrandr --output "$INPUT2" --rotate left --auto --right-of "$INPUT1"
 		xrandr --output "$INPUT3" --rotate right --auto --right-of "$INPUT2"
 	fi
-else
-	echo "🟥 Unrecognized number of monitors"
 fi
 
 sleep 1
