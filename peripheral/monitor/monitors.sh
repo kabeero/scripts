@@ -46,14 +46,14 @@ set -exo pipefail
 
 if [[ $MONS == 1 ]]; then
 
-	INPUT1=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==1) print $1}')
+	INPUT1=$(xrandr | grep " connected" | awk '{if (NR==1) print $1}')
 
 	xrandr --output "$INPUT1" --auto
 
 elif [[ $MONS == 2 ]]; then
 
-	INPUT1=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==1) print $1}')
-	INPUT2=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==2) print $1}')
+	INPUT1=$(xrandr | grep " connected" | awk '{if (NR==1) print $1}')
+	INPUT2=$(xrandr | grep " connected" | awk '{if (NR==2) print $1}')
 
 	if [[ $select == "0" ]]; then
 		xrandr --output "$INPUT1" --auto
@@ -68,9 +68,9 @@ elif [[ $MONS == 2 ]]; then
 
 elif [[ $MONS == 3 ]]; then
 
-	INPUT1=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==1) print $1}')
-	INPUT2=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==3) print $1}')
-	INPUT3=$(xrandr | grep " connected" | grep -E "e?DP" | awk '{if (NR==2) print $1}')
+	INPUT1=$(xrandr | grep " connected" | awk '{if (NR==1) print $1}')
+	INPUT2=$(xrandr | grep " connected" | awk '{if (NR==3) print $1}')
+	INPUT3=$(xrandr | grep " connected" | awk '{if (NR==2) print $1}')
 
 	if [[ $select == "0" ]]; then
 		xrandr --output "$INPUT1" --auto

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-lines=10
+lines=19
 if [[ $# -eq 1 ]]; then
     lines=$1
 fi
