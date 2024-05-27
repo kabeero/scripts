@@ -2,49 +2,34 @@
 
 set -eou pipefail
 
-
-if [ ! -x "$(command -v go)" ]; then
-    echo "Please install go"
-    exit 1
-fi
-
-if [ ! -x "$(command -v glow)" ]; then
-    echo "Please install glow"
-    exit 1
-fi
-
-if [ ! -x "$(command -v gum)" ]; then
-    echo "Please install gum"
-    exit 1
-fi
-
+for cmd in "go" "glow" "gum"; do
+	if [ ! -x "$(command -v $cmd)" ]; then
+		echo "Please install $cmd"
+		exit 1
+	fi
+done
 
 if [ ! -e go.mod ]; then
-    echo "Please run in a go module, with a go.mod file"
-    exit 1
+	HELP_MOD=$(gum input --header "Enter module for docs" --placeholder="")
+else
+	if [ $# -gt 0 ]; then
+		MOD=""
+		HELP_MOD=$(
+			grep -E "^require" <go.mod |
+				sed -e 's/require //; s$ // indirect$$; s$ .*$$' |
+				gum choose
+		)
+
+		if [[ -n $MOD ]]; then
+			HELP_MOD="$HELP_MOD/$MOD"
+		fi
+
+		HELP_MOD=$(
+			gum input \
+				--header "🔍 Module to lookup" \
+				--value="$HELP_MOD"
+		)
+	fi
 fi
-
-MOD=""
-
-if [ $# -gt 0 ]; then
-    MOD=$1
-fi
-
-HELP_MOD=$(
-    cat go.mod | \
-    grep -E "^require" | \
-    sed -e 's/require //; s$ // indirect$$; s$ .*$$' | \
-    gum choose
-)
-
-if [[ ! -z $MOD ]]; then
-    HELP_MOD="$HELP_MOD/$MOD"
-fi
-
-HELP_MOD=$(
-    gum input \
-        --header "🔍 Module to lookup" \
-        --value="$HELP_MOD"
-)
 
 go doc "$HELP_MOD" | glow -p
