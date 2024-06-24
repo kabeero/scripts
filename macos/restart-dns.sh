@@ -5,7 +5,8 @@
 option=$(
 	gum choose \
 		"1) configd" \
-		"2) networksetup"
+		"2) networksetup" \
+		"3) flush DNS & restart mdns"
 )
 
 set -exo pipefail
@@ -16,6 +17,10 @@ case $option in
 	;;
 2*)
 	sudo networksetup -setdnsservers Wi-Fi "Empty"
+	;;
+3*)
+	sudo dscacheutil -flushcache
+	sudo killall -HUP mDNSResponder
 	;;
 *)
 	exit 1
