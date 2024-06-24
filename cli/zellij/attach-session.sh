@@ -2,4 +2,4 @@
 
 set -eo pipefail
 
-zellij ls -ns | sort | gum choose --header "Attach session" | xargs -r -n1 zellij attach
+zellij ls -ns | sort | gum filter --header "Attach session" --placeholder "Session name…" --no-fuzzy | xargs -r -n1 zellij attach
