@@ -35,7 +35,7 @@ function ScanThunderbolt() {
     done
 
     echo
-    if [ -n "$uuid" ]; then
+    if [[ -z "$uuid" ]]; then
         echo "Couldn't find a connected $model device"
     else
         echo "Found $model device @ $uuid"
