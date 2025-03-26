@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
+export GUM_CHOOSE_SHOW_HELP=0
 choice=$(gum choose "With padding" "No padding")
 
 echo "$choice"
 
-if [[ "$choice" =~ "abort" ]]; then
-    exit 1
-fi
-
 case $choice in
-abort*)
-    exit 1
-    ;;
 With*)
     yabai -m config top_padding 8
     ;;
