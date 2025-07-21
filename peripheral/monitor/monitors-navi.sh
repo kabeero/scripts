@@ -51,7 +51,23 @@ elif [[ $MONS == 2 ]]; then
     INPUT2=$(xrandr | grep " connected" | awk '{if (NR==2) print $1}')
 
     if [[ $select == "0" ]]; then
-        xrandr --output "$INPUT1" --rotate right --auto
+        #     ╭───────────╮
+        #     │           │
+        #     │           │
+        #     │           │
+        #     │     1     │
+        #     │           │
+        #     │           │
+        #     │           │
+        #     ╰───────────╯
+        # xrandr --output "$INPUT1" --rotate right --auto
+        # xrandr --output "$INPUT2" --off
+        # ╭─────────────────────╮
+        # │                     │
+        # │          1          │
+        # │                     │
+        # ╰─────────────────────╯
+        xrandr --output "$INPUT1" --rotate normal --auto
         xrandr --output "$INPUT2" --off
     elif [[ $select == "1" ]]; then
         xrandr --output "$INPUT1" --rotate right --auto
