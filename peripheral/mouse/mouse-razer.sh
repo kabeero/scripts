@@ -3,28 +3,31 @@
 set -uo pipefail
 
 if [ ! "$(command -v gum)" ] &>/dev/null; then
-	echo
-	echo "❗ Please install gum"
-	echo
-	exit 1
+    echo
+    echo "❗ Please install gum"
+    echo
+    exit 1
 fi
 
-MOUSE=$(gum choose Basilisk Deathadder Logitech)
+MICE=(Basilink Cobra DeathAdder Logitech)
+MOUSE=$(gum choose ${MICE[@]})
 
-if [[ $MOUSE == "Basilisk" ]]; then
-	MOUSE_STR="Razer Razer Basilisk Ultimate Dongle"
-elif [[ $MOUSE == "Deathadder" ]]; then
-	MOUSE_STR="Razer Razer DeathAdder V2 Pro"
-elif [[ $MOUSE == "Logitech" ]]; then
-	MOUSE_STR="Logitech MX Ergo"
+if [[ $MOUSE == ${MICE[0]} ]]; then
+    MOUSE_STR="Razer Razer Basilisk Ultimate Dongle"
+elif [[ $MOUSE == ${MICE[1]} ]]; then
+    MOUSE_STR="Razer Razer Cobra Pro"
+elif [[ $MOUSE == ${MICE[2]} ]]; then
+    MOUSE_STR="Razer Razer DeathAdder V2 Pro"
+elif [[ $MOUSE == ${MICE[3]} ]]; then
+    MOUSE_STR="Logitech MX Ergo"
 fi
 
 if [[ $MOUSE =~ "Razer" ]]; then
-	MOUSE_STR="${MOUSE_STR} [^CSK] .*pointer.*"
+    MOUSE_STR="${MOUSE_STR} [^CSK] .*pointer.*"
 fi
 MOUSE_PROP="Natural Scrolling Enabled ("
 
-ID=$(xinput list | grep "slave  pointer" | grep -E "$MOUSE_STR" | grep -oE "id=[0-9]+" | sed -e 's/id=//g' | tail -1)
+ID=$(xinput list | grep "slave  pointer" | grep -v "Keyboard" | grep -E "$MOUSE_STR" | grep -oE "id=[0-9]+" | sed -e 's/id=//g' | head -1)
 NATURAL_ID=$(xinput list-props "$ID" | grep "$MOUSE_PROP" | sed -E 's/(.*)\(([0-9]{3})(.*)([0-9]{1})/\2/')
 NATURAL_ON=$(xinput list-props "$ID" | grep "$MOUSE_PROP" | sed -E 's/(.*)\(([0-9]{3})(.*)([0-9]{1})/\4/')
 BUTTON_MAP=$(xinput get-button-map "$ID" | awk '{print $6 $7}')
@@ -42,35 +45,35 @@ natural-flip() { [ "$NATURAL_ON" -eq 0 ] && natural-on || natural-off; }
 
 case $1 in
 
-s | side)
+s*)
 
-	if [ $# -eq 2 ]; then
-		if [[ $2 == "on" ]] || [[ $2 == "1" ]]; then
-			side-on
-		elif [[ $2 == "off" ]] || [[ $2 == "0" ]]; then
-			side-off
-		else
-			side-flip
-		fi
-	else
-		[[ $BUTTON_MAP = "45" ]] && echo "Side scrolling enabled" || echo "Side scrolling disabled"
-	fi
-	;;
+    if [ $# -eq 2 ]; then
+        if [[ $2 == "on" ]] || [[ $2 == "1" ]]; then
+            side-on
+        elif [[ $2 == "off" ]] || [[ $2 == "0" ]]; then
+            side-off
+        else
+            side-flip
+        fi
+    else
+        [[ $BUTTON_MAP = "45" ]] && echo "Side scrolling is enabled" || echo "Side scrolling is disabled"
+    fi
+    ;;
 
-n | natural)
+n*)
 
-	if [ $# -eq 2 ]; then
-		if [[ $2 == "on" ]] || [[ $2 == "1" ]]; then
-			natural-on
-		elif [[ $2 == "off" ]] || [[ $2 == "0" ]]; then
-			natural-off
-		else
-			natural-flip
-		fi
-	else
-		[ "$NATURAL_ON" -eq 1 ] && echo "Natural scrolling enabled" || echo "Natural scrolling disabled"
-	fi
-	;;
+    if [ $# -eq 2 ]; then
+        if [[ $2 == "on" ]] || [[ $2 == "1" ]]; then
+            natural-on
+        elif [[ $2 == "off" ]] || [[ $2 == "0" ]]; then
+            natural-off
+        else
+            natural-flip
+        fi
+    else
+        [ "$NATURAL_ON" -eq 1 ] && echo "Natural scrolling is enabled" || echo "Natural scrolling is disabled"
+    fi
+    ;;
 
 b | buttons | button | i | info) button-info ;;
 
