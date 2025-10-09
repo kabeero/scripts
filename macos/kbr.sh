@@ -2,7 +2,11 @@
 
 # > https://mac-key-repeat.zaymon.dev/
 
-# 120 ms / 60 ms
+# 120 ms / 75 ms
+# defaults write -g InitialKeyRepeat -int 8
+# defaults write -g KeyRepeat -int 5
+
+# # 120 ms / 60 ms
 # defaults write -g InitialKeyRepeat -int 8
 # defaults write -g KeyRepeat -int 4
 
@@ -27,7 +31,7 @@ options=(
 
 defaults=(
     "-int 8"
-    "-int 4"
+    "-int 5"
     "-bool false"
 )
 header() {
@@ -40,7 +44,7 @@ apply_kbr() {
     read_kbr
     for key in "${!options[@]}"; do
         set -x
-        defaults write -g ${defaults[$key]}
+        defaults write -g ${options[$key]} ${defaults[$key]}
         set +x
     done
     header "New Values"
