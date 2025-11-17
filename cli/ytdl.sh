@@ -11,8 +11,9 @@ if [[ $# -ne 1 ]]; then
 fi
 
 yt-dlp \
-    -o "%(title)s.$(ext)s" \
+    -o "%(title)s.%(ext)s" \
+    --embed-metadata \
+    --embed-subs \
     --write-subs \
     --sub-langs en \
-    --embed subs \
     $1
