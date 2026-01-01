@@ -2,17 +2,21 @@
 
 # > https://mac-key-repeat.zaymon.dev/
 
+# 120 ms / 60 ms
+# InitialKeyRepeat -int 8
+# KeyRepeat -int 4
+
 # 120 ms / 75 ms
-# defaults write -g InitialKeyRepeat -int 8
-# defaults write -g KeyRepeat -int 5
+# InitialKeyRepeat -int 8
+# KeyRepeat -int 5
 
-# # 120 ms / 60 ms
-# defaults write -g InitialKeyRepeat -int 8
-# defaults write -g KeyRepeat -int 4
+# 180 ms / 90 ms
+# InitialKeyRepeat -int 12
+# KeyRepeat -int 6
 
-# # 180 ms / 30 ms
-# defaults write -g InitialKeyRepeat -int 12 ;
-# defaults write -g KeyRepeat -int 2 ;
+# 180 ms / 30 ms
+# InitialKeyRepeat -int 12
+# KeyRepeat -int 2
 
 # defaults write -g ApplePressAndHoldEnabled -bool false
 
@@ -30,7 +34,7 @@ options=(
 )
 
 defaults=(
-    "-int 8"
+    "-int 12"
     "-int 5"
     "-bool false"
 )
