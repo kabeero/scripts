@@ -1,0 +1,26 @@
+{
+  "description": "Map Command+Option+V to Command+Space then Command+2 (open macOS clipboard history)",
+  "manipulators": [
+    {
+      "from": {
+        "key_code": "period",
+        "modifiers": {
+          "mandatory": ["command", "option"],
+          "optional": ["any"]
+        }
+      },
+      "to": [
+        {
+          "hold_down_milliseconds": 200,
+          "key_code": "spacebar",
+          "modifiers": ["command"]
+        },
+        {
+          "key_code": "2",
+          "modifiers": ["command"]
+        }
+      ],
+      "type": "basic"
+    }
+  ]
+}
