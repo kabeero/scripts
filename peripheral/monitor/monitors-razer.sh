@@ -7,9 +7,6 @@ export GUM_CHOOSE_CURSOR_FOREGROUND=#22FF88
 export GUM_CHOOSE_SELECTED_FOREGROUND=#22FF88
 export GUM_CHOOSE_SHOW_HELP=0
 
-# env | sort >debug-env-01.txt
-# SHLVL=3
-
 QUIET=""
 SCALES=("1.25" "auto" "auto")
 ROTATE=("0" "0" "1")
@@ -76,35 +73,24 @@ else
     fi
 fi
 
-sleep 3
-
 if [[ $select == "0" ]]; then
     # laptop only
     #                           input    res      pos  scale   rotate
     cmd=""
     cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT1[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
     cmd+="keyword monitor ${INPUT1}, disable;"
-    set -x
-    hyprctl ${QUIET} --instance ${HYPR_INST} --batch ${cmd}
-    set +x
 elif [[ $select == "1" ]]; then
     # single
     #                           input    res      pos  scale   rotate
     cmd=""
     cmd+="keyword monitor ${INPUT0}, disable;"
     cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT1[0]}, ${SCALES[1]}, transform, ${ROTATE[0]}, bitdepth, 10;"
-    set -x
-    hyprctl ${QUIET} --instance ${HYPR_INST} --batch ${cmd}
-    set +x
 elif [[ $select == "2" ]]; then
     # dual
     #                           input    res      pos  scale   rotate
     cmd=""
     cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT2[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
     cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT2[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
-    set -x
-    hyprctl ${QUIET} --instance ${HYPR_INST} --batch ${cmd}
-    set +x
 elif [[ $select == "3" ]]; then
     # triple
     #                           input    res      pos  scale   rotate
@@ -112,13 +98,12 @@ elif [[ $select == "3" ]]; then
     cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT3[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
     cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT3[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
     cmd+="keyword monitor ${INPUT2}, preferred, ${LAYOUT3[2]}, ${SCALES[2]}, transform, ${ROTATE[2]}, bitdepth, 10;"
-    set -x
-    hyprctl ${QUIET} --instance ${HYPR_INST} --batch ${cmd}
-    set +x
 fi
 
-hyprctl reload
+set -x
+hyprctl ${QUIET} --instance ${HYPR_INST} --batch ${cmd}
+set +x
 
-sleep 1
+sleep 0.5
 
 # background
