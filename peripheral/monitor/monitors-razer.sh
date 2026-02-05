@@ -8,11 +8,14 @@ export GUM_CHOOSE_SELECTED_FOREGROUND=#22FF88
 export GUM_CHOOSE_SHOW_HELP=0
 
 QUIET=""
-SCALES=("1.25" "auto" "auto")
-ROTATE=("0" "0" "1")
+SCALES=("1.25" "auto" "auto" "auto")
+ROTATE=("0" "1" "3" "1")
+# layouts for 1/2/3/4 monitors
 LAYOUT1=("0x0")
 LAYOUT2=("0x0" "0x-2160")
 LAYOUT3=("-6000x0" "-2160x-840" "0x0")
+# LAYOUT3=("-3072x1080" "0x0" "4320x0" "2160x0") # eDP @ 1.25
+LAYOUT4=("-3072x1080" "0x0" "4320x0" "2160x0") # eDP @ 1.25
 
 for prog in "gum" "jq"; do
     if ! command -v $prog &>/dev/null; then
@@ -53,18 +56,23 @@ else
         echo "  ${GUM_CHOOSE_CURSOR}$m"
     done
     echo
+    INPUT0=${displays[0]}
+    INPUT1=${displays[1]}
+    INPUT2=${displays[2]}
+    INPUT3=${displays[3]}
+    INPUT4=${displays[4]}
     choices=()
     if [[ ${#displays[@]} -ge 1 ]]; then
-        INPUT0=${displays[0]}
         choices+=("0) Laptop monitor")
     fi
     if [[ ${#displays[@]} -ge 2 ]]; then
-        INPUT1=${displays[1]}
         choices+=("1) External monitor" "2) Dual monitor")
     fi
     if [[ ${#displays[@]} -ge 3 ]]; then
-        INPUT2=${displays[2]}
         choices+=("3) Triple monitor")
+    fi
+    if [[ ${#displays[@]} -ge 4 ]]; then
+        choices+=("4) Quad monitor")
     fi
     IFS=$'\n'
     select=$(gum choose ${choices[@]} | grep -oE "^[0-9]")
@@ -73,31 +81,58 @@ else
     fi
 fi
 
+echo "Selected: ${select}"
+
+cmd=""
+for disabled in "$INPUT0" "$INPUT1" "$INPUT2" "$INPUT3" "$INPUT4"; do
+    [[ -n $disabled ]] && cmd+="keyword monitor ${disabled}, disable;"
+done
+
 if [[ $select == "0" ]]; then
     # laptop only
     #                           input    res      pos  scale   rotate
-    cmd=""
     cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT1[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
-    cmd+="keyword monitor ${INPUT1}, disable;"
 elif [[ $select == "1" ]]; then
     # single
     #                           input    res      pos  scale   rotate
-    cmd=""
-    cmd+="keyword monitor ${INPUT0}, disable;"
-    cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT1[0]}, ${SCALES[1]}, transform, ${ROTATE[0]}, bitdepth, 10;"
+    cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT1[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
 elif [[ $select == "2" ]]; then
-    # dual
-    #                           input    res      pos  scale   rotate
-    cmd=""
-    cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT2[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
-    cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT2[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
+    if [[ ${#displays[@]} -lt 3 ]]; then
+        # dual
+        # laptop on, external
+        #                           input    res      pos  scale   rotate
+        cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT2[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
+        cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT2[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
+    else
+        # triple+
+        # laptop off, dual external
+        #                           input    res      pos  scale   rotate
+        cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT4[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
+        cmd+="keyword monitor ${INPUT3}, preferred, ${LAYOUT4[3]}, ${SCALES[3]}, transform, ${ROTATE[3]}, bitdepth, 10;"
+    fi
 elif [[ $select == "3" ]]; then
-    # triple
+    if [[ ${#displays[@]} -lt 4 ]]; then
+        # triple
+        # laptop on, dual external
+        #                           input    res      pos  scale   rotate
+        cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT3[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
+        cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT3[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
+        cmd+="keyword monitor ${INPUT2}, preferred, ${LAYOUT3[2]}, ${SCALES[2]}, transform, ${ROTATE[2]}, bitdepth, 10;"
+    else
+        # quad+
+        # laptop off, triple external
+        #                           input    res      pos  scale   rotate
+        cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT4[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
+        cmd+="keyword monitor ${INPUT2}, preferred, ${LAYOUT4[2]}, ${SCALES[2]}, transform, ${ROTATE[2]}, bitdepth, 10;"
+        cmd+="keyword monitor ${INPUT3}, preferred, ${LAYOUT4[3]}, ${SCALES[3]}, transform, ${ROTATE[3]}, bitdepth, 10;"
+    fi
+elif [[ $select == "4" ]]; then
+    # quad
     #                           input    res      pos  scale   rotate
-    cmd=""
-    cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT3[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
-    cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT3[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
-    cmd+="keyword monitor ${INPUT2}, preferred, ${LAYOUT3[2]}, ${SCALES[2]}, transform, ${ROTATE[2]}, bitdepth, 10;"
+    cmd+="keyword monitor ${INPUT0}, preferred, ${LAYOUT4[0]}, ${SCALES[0]}, transform, ${ROTATE[0]}, bitdepth, 10;"
+    cmd+="keyword monitor ${INPUT1}, preferred, ${LAYOUT4[1]}, ${SCALES[1]}, transform, ${ROTATE[1]}, bitdepth, 10;"
+    cmd+="keyword monitor ${INPUT2}, preferred, ${LAYOUT4[2]}, ${SCALES[2]}, transform, ${ROTATE[2]}, bitdepth, 10;"
+    cmd+="keyword monitor ${INPUT3}, preferred, ${LAYOUT4[3]}, ${SCALES[3]}, transform, ${ROTATE[3]}, bitdepth, 10;"
 fi
 
 set -x
