@@ -14,7 +14,7 @@
           "optional": ["any"]
         }
       },
-      "to": [{ "key_code": "play_or_pause" }],
+      "to": [{ "consumer_key_code": "play_or_pause" }],
       "type": "basic"
     },
     {
@@ -30,7 +30,7 @@
           "optional": ["any"]
         }
       },
-      "to": [{ "key_code": "volume_down" }],
+      "to": [{ "consumer_key_code": "volume_decrement" }],
       "type": "basic"
     },
     {
@@ -46,7 +46,23 @@
           "optional": ["any"]
         }
       },
-      "to": [{ "key_code": "volume_up" }],
+      "to": [{ "consumer_key_code": "volume_increment" }],
+      "type": "basic"
+    },
+    {
+      "from": {
+        "key_code": "slash",
+        "modifiers": {
+          "mandatory": [
+            "left_command",
+            "left_option",
+            "left_control",
+            "left_shift"
+          ],
+          "optional": ["any"]
+        }
+      },
+      "to": [{ "consumer_key_code": "mute" }],
       "type": "basic"
     }
   ]
