@@ -1,1 +1,3 @@
-defaults write com.apple.finder ShowMountedServersOnDesktop 0 ; killall Finder
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool false
+defaults write com.apple.finder AppleShowDesktopIcons -bool false
+killall Finder
