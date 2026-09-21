@@ -10,6 +10,11 @@
 # InitialKeyRepeat -int 8
 # KeyRepeat -int 5
 
+# (*)
+# 180 ms / 45 ms
+# InitialKeyRepeat -int 12
+# KeyRepeat -int 3
+
 # 180 ms / 90 ms
 # InitialKeyRepeat -int 12
 # KeyRepeat -int 6
@@ -35,7 +40,7 @@ options=(
 
 defaults=(
     "-int 12"
-    "-int 5"
+    "-int 3"
     "-bool false"
 )
 header() {
@@ -71,5 +76,6 @@ case $# in
     ;;
 1)
     apply_kbr
+    echo "Remember to logout to take effect"
     ;;
 esac
